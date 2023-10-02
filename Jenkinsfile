@@ -41,12 +41,19 @@ pipeline {
             stages {
                 stage('Validar Archivos Raml') {
                     steps {
-                        sh 'echo "${params.BRANCH_CONFIG}"'
-                        sh 'echo "echo "${params.BRANCH_RAML}"'
-                        sh 'echo "echo "${params.BRANCH_HTML}"'
-                        sh 'pwd'
+                        script {
+                            validar_archivos_raml()
+                        }
                     }
                 }
+
+                /*stage('Publicar en Github') {
+                    steps {
+                        script {
+                            guardar_archivos_html()
+                        }
+                    }
+                }*/
             }
         }
     }
@@ -86,7 +93,7 @@ def variables_repositorios(def config = "", def repo = "") {
 def clone_repositorios(def config = "") {
     script {
         if ( config.equals("CONFIG") ) {
-            sh "git clone -b ${params.BRANCH_CONFIG} ${env.REPO_GIT_CONFIG}"
+            sh "git clone ${env.REPO_GIT_CONFIG}"
             sh "chmod -R 777 ${REPO_CONFIG}"
         } else if ( config.equals("RAML") ) {
             sh "git clone -b ${params.BRANCH_RAML} ${GIT_REPO_RAML}"
@@ -98,8 +105,8 @@ def clone_repositorios(def config = "") {
 
 def validar_archivos_raml() {
     script {
-        sh "node ./${REPO_CONFIG}/script_raml.js"
-        sh "./${REPO_CONFIG}/script.sh"
+        sh "node ./${REPO_CONFIG}/${env.RAML2HTML_SCRIPT}"
+        sh "./${REPO_CONFIG}/${env.RAML2HTML_VALIDATE}"
     }
 }
 
