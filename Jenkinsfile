@@ -15,7 +15,6 @@ pipeline {
             steps {
                 script {
                     variables_repositorios("CONFIG", "${env.REPO_GIT_CONFIG}")
-                    variables_repositorios("RAML", "${params.REPO_NAME_RAML}")
                 }
             }
         }
@@ -24,47 +23,28 @@ pipeline {
             steps {
                 script {
                     clone_repositorios("CONFIG")
-                    clone_repositorios("RAML")
                     clone_repositorios("SAVE")
                 }
             }
         }
 
-        stage('Validar y Guardar Archivos') {
-            environment {
-                REPO_RAML = "${REPO_RAML}"
-                FILENAME_RAML = "${FILENAME_RAML}"
-                FILENAME_HTML = "${FILENAME_HTML}"
-                FILENAME_ERROR = "${FILENAME_ERROR}"
-            }
-
-            stages {
-                stage('Validar Archivos Raml') {
-                    steps {
-                        script {
-                            validar_archivos_raml()
-                        }
-                    }
-                }
-
-                stage('Publicar en Github') {
-                    steps {
-                        script {
-                            guardar_archivos_html()
-                        }
-                    }
+        stage('Test') {
+            steps {
+                script {
+                    sh 'ls'
+                    sh 'pwd'
                 }
             }
         }
     }
     post {
         success {
-            enviar_email("SUCCESS")
+            //enviar_email("SUCCESS")
             cleanWs()
         }
 
         failure {
-            enviar_email("FAILURE")
+            //enviar_email("FAILURE")
             cleanWs()
         }
     }
