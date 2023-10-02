@@ -47,24 +47,24 @@ pipeline {
                     }
                 }
 
-                /*stage('Publicar en Github') {
+                stage('Publicar en Github') {
                     steps {
                         script {
                             guardar_archivos_html()
                         }
                     }
-                }*/
+                }
             }
         }
     }
     post {
         success {
-            //enviar_email("SUCCESS")
+            enviar_email("SUCCESS")
             cleanWs()
         }
 
         failure {
-            //enviar_email("FAILURE")
+            enviar_email("FAILURE")
             cleanWs()
         }
     }
@@ -116,8 +116,6 @@ def guardar_archivos_html() {
             sh script: '''
                 cp -f ./${FILENAME_HTML} ./apis_raml_html
                 cd ./apis_raml_html
-                git config --global user.email "${GIT_CONFIG_EMAIL}"
-                git config --global user.name "${GIT_CONFIG_USER}"
                 git add ${FILENAME_HTML}
                 git commit -m "Jenkins Pipeline: ${JOB_NAME} - Triggered Build: ${BUILD_NUMBER}"
                 git push -u https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/apis_raml_html.git
