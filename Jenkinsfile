@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     variables_repositorios("CONFIG", "${env.REPO_GIT_CONFIG}")
-                    variables_repositorios("RAML", "https://github.com/AlanKairosDS/Dom-Branch-Location-Operation.git")
+                    variables_repositorios("RAML", "${params.REPO_NAME_RAML}")
                 }
             }
         }
