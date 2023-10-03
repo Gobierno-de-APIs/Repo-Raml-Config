@@ -8,7 +8,6 @@ const ramlFile = path.join('', process.env.FILENAME_RAML);
 
 raml2html.render(ramlFile, configWithDefaultTheme).then(
   (result) => {
-    console.log(ramlFile);
     fs.appendFile(process.env.FILENAME_HTML, result, function (err) {
       if (err) {
         console.log("Error al generar archivo HTML");
@@ -18,7 +17,6 @@ raml2html.render(ramlFile, configWithDefaultTheme).then(
     });
   },
   (error) => {
-    console.log(ramlFile);
     console.log(error);
     fs.appendFile(process.env.FILENAME_ERROR, error, function (err) {
       if (err) {
