@@ -75,10 +75,8 @@ def clone_repositorios(def config = "") {
         if ( config.equals("CONFIG") ) {
             sh "git clone ${env.REPO_GIT_CONFIG}"
             sh "chmod -R 777 ${REPO_CONFIG}"
-        } else if ( config.equals("RAML") ) {
-            sh "git clone -b ${params.BRANCH_RAML} ${GIT_REPO_RAML}"
         } else {
-            sh "git clone -b ${params.BRANCH_HTML} ${env.REPO_GIT_SAVE_RAML}"
+            sh "git clone ${env.REPO_GIT_SAVE_RAML}"
         }
     }
 }
