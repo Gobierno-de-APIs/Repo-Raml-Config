@@ -7,6 +7,7 @@ const configWithDefaultTheme = raml2html.getConfigForTheme();
 const ramlFile = path.join(__dirname, process.env.FILENAME_RAML);
 
 raml2html.render(ramlFile, configWithDefaultTheme).then(
+  console.log(ramlFile);
   (result) => {
     fs.appendFile(process.env.FILENAME_HTML, result, function (err) {
       if (err) {
