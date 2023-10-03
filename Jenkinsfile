@@ -15,6 +15,7 @@ pipeline {
             steps {
                 script {
                     variables_repositorios("CONFIG", "${env.REPO_GIT_CONFIG}")
+                    variables_repositorios("RAML", "${GIT_URL}")
                 }
             }
         }
@@ -22,14 +23,13 @@ pipeline {
         stage('Clonar Repositorios') {
             steps {
                 script {
-                    sh 'echo "${GIT_URL}"'
                     clone_repositorios("CONFIG")
                     clone_repositorios("SAVE")
                 }
             }
         }
 
-        /*stage('Validar y Guardar Archivos') {
+        stage('Validar y Guardar Archivos') {
             environment {
                 REPO_RAML = "${REPO_RAML}"
                 FILENAME_RAML = "${FILENAME_RAML}"
@@ -46,15 +46,15 @@ pipeline {
                     }
                 }
 
-                stage('Publicar en Github') {
+                /*stage('Publicar en Github') {
                     steps {
                         script {
                             guardar_archivos_html()
                         }
                     }
-                }
+                }*/
             }
-        }*/
+        }
     }
     post {
         success {
@@ -80,7 +80,6 @@ def variables_repositorios(def config = "", def repo = "") {
         if ( config.equals("CONFIG") ) {
             REPO_CONFIG = repositorio_name
         } else {
-            GIT_REPO_RAML = repo
             REPO_RAML = repositorio_name
             FILENAME_RAML = "${repositorio_name.toLowerCase()}.raml"
             FILENAME_HTML = "${repositorio_name.toLowerCase()}.html"
