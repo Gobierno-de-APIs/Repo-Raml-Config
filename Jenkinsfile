@@ -46,13 +46,14 @@ pipeline {
                     }
                 }
 
-                /*stage('Publicar en Github') {
+                stage('Publicar en Github') {
                     steps {
                         script {
-                            guardar_archivos_html()
+                            //guardar_archivos_html()
+                            sh 'ls'
                         }
                     }
-                }*/
+                }
             }
         }
     }
@@ -127,14 +128,14 @@ def enviar_email(def status = "") {
 
             emailext to: "${env.EMAIL_VALIDATION_APIS}",
                 subject: "Build: ${currentBuild.currentResult} - Jenkins Pipeline: ${env.JOB_NAME}",
-                body: "<strong>${currentBuild.currentResult}:</strong> ${env.JOB_NAME}<br /><br /><strong>Build Number:</strong> ${env.BUILD_NUMBER}<br /><br />Para más información sobre la ejecución del pipeline, puedes revisar en la siguiente URL: ${env.BUILD_URL}<br /><br />El archivo generado se guardo en el siguiente repositorio: ${env.REPO_GIT_SAVE_RAML}",
+                body: "<strong>${currentBuild.currentResult}:</strong> ${env.JOB_NAME}<br /><br /><strong>Build Number:</strong> ${env.BUILD_NUMBER}<br /><br /><br /><strong>Branch:</strong> ${GIT_BRANCH}<br />Para más información sobre la ejecución del pipeline, puedes revisar en la siguiente URL: ${env.BUILD_URL}<br /><br />El archivo generado se guardo en el siguiente repositorio: ${env.REPO_GIT_SAVE_RAML}",
                 attachmentsPattern: '*.html'
         } else {
             archiveArtifacts artifacts: '**/*.txt', onlyIfSuccessful: false
 
             emailext to: "${env.EMAIL_VALIDATION_APIS}",
                 subject: "Build: ${currentBuild.currentResult} - Jenkins Pipeline: ${env.JOB_NAME}",
-                body: "<strong>${currentBuild.currentResult}:</strong> ${env.JOB_NAME}<br /><br /><strong>Build Number:</strong> ${env.BUILD_NUMBER}<br /><br />Para más información sobre la ejecución del pipeline, puedes revisar en la siguiente URL: ${env.BUILD_URL}"
+                body: "<strong>${currentBuild.currentResult}:</strong> ${env.JOB_NAME}<br /><br /><strong>Build Number:</strong> ${env.BUILD_NUMBER}<br /><br /><br /><strong>Branch:</strong> ${GIT_BRANCH}<br />Para más información sobre la ejecución del pipeline, puedes revisar en la siguiente URL: ${env.BUILD_URL}"
         }
     }
 }
