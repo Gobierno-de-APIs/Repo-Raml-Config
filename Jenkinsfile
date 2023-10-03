@@ -49,8 +49,7 @@ pipeline {
                 stage('Publicar en Github') {
                     steps {
                         script {
-                            //guardar_archivos_html()
-                            sh 'ls'
+                            guardar_archivos_html()
                         }
                     }
                 }
@@ -59,12 +58,12 @@ pipeline {
     }
     post {
         success {
-            //enviar_email("SUCCESS")
+            enviar_email("SUCCESS")
             cleanWs()
         }
 
         failure {
-            //enviar_email("FAILURE")
+            enviar_email("FAILURE")
             cleanWs()
         }
     }
