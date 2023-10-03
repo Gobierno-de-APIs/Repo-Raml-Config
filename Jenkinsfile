@@ -82,7 +82,7 @@ def variables_repositorios(def config = "", def repo = "") {
         } else {
             REPO_RAML = repositorio_name
             FILENAME_RAML = "${repositorio_name.toLowerCase()}.raml"
-            FILENAME_HTML = "${repositorio_name.toLowerCase()}.html"
+            FILENAME_HTML = "${repositorio_name.toLowerCase()}-${GIT_BRANCH}.html"
             FILENAME_ERROR = "error-${repositorio_name.toLowerCase()}-${currentBuild.number}.txt"
         }
     }
@@ -113,7 +113,7 @@ def guardar_archivos_html() {
                 cp -f ./${FILENAME_HTML} ./apis_raml_html
                 cd ./apis_raml_html
                 git add ${FILENAME_HTML}
-                git commit -m "Jenkins Pipeline: ${JOB_NAME} - Triggered Build: ${BUILD_NUMBER}"
+                git commit -m "Jenkins Pipeline: ${JOB_NAME} - Build: ${BUILD_NUMBER}"
                 git push -u https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/apis_raml_html.git
             '''
         }
