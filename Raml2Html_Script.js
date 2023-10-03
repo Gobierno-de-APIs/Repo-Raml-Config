@@ -4,7 +4,7 @@ const raml2html = require("/usr/local/lib/node_modules/raml2html");
 
 const configWithDefaultTheme = raml2html.getConfigForTheme();
 
-const ramlFile = path.join(process.env.REPO_RAML, process.env.FILENAME_RAML);
+const ramlFile = path.join(__dirname, process.env.FILENAME_RAML);
 
 raml2html.render(ramlFile, configWithDefaultTheme).then(
   (result) => {
