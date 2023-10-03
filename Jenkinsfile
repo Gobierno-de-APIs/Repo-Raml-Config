@@ -22,20 +22,39 @@ pipeline {
         stage('Clonar Repositorios') {
             steps {
                 script {
+                    sh 'echo "${GIT_URL}"'
                     clone_repositorios("CONFIG")
                     clone_repositorios("SAVE")
                 }
             }
         }
 
-        stage('Test') {
-            steps {
-                script {
-                    sh 'ls'
-                    sh 'pwd'
+        /*stage('Validar y Guardar Archivos') {
+            environment {
+                REPO_RAML = "${REPO_RAML}"
+                FILENAME_RAML = "${FILENAME_RAML}"
+                FILENAME_HTML = "${FILENAME_HTML}"
+                FILENAME_ERROR = "${FILENAME_ERROR}"
+            }
+
+            stages {
+                stage('Validar Archivos Raml') {
+                    steps {
+                        script {
+                            validar_archivos_raml()
+                        }
+                    }
+                }
+
+                stage('Publicar en Github') {
+                    steps {
+                        script {
+                            guardar_archivos_html()
+                        }
+                    }
                 }
             }
-        }
+        }*/
     }
     post {
         success {
