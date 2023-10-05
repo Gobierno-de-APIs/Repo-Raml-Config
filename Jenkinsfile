@@ -21,11 +21,9 @@ pipeline {
                           returnStdout: true
                     ).trim()
                     
-                    sh script: '''
-                        echo "COMMITTER_EMAIL: ${COMMITTER_EMAIL}"
+                    echo "COMMITTER_EMAIL: ${env.COMMITTER_EMAIL}"
 
-                        echo "COMMITTER_USER: ${COMMITTER_USER}"
-                    '''
+                    echo "COMMITTER_USER: ${env.COMMITTER_USER}"
                 }
             }
         }
@@ -33,20 +31,6 @@ pipeline {
     post {
         always {
             cleanWs()
-        }
-    }
-}
-
-def guardar_archivos_html() {
-    script {
-        withCredentials([usernamePassword(credentialsId: 'GitHub_Credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-            sh script: '''
-                cp -f ./${FILENAME_HTML} ./apis_raml_html
-                cd ./apis_raml_html
-                git add ${FILENAME_HTML}
-                git commit -m "Jenkins Pipeline: ${JOB_NAME} - Build: ${BUILD_NUMBER}"
-                git push -u https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/apis_raml_html.git
-            '''
         }
     }
 }
