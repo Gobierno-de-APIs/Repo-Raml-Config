@@ -11,6 +11,13 @@ pipeline {
                     ).trim()
                     
                     echo "COMMITTER_EMAIL: ${COMMITTER_EMAIL}"
+
+                    def COMMITTER_USER = sh (
+                          script: 'git show --name-only',
+                          returnStdout: true
+                    ).trim()
+                    
+                    echo "COMMITTER_USER: ${COMMITTER_USER}"
                     
                     sh 'echo "${GIT_URL}"'
                     sh 'echo "${GIT_BRANCH}"'
