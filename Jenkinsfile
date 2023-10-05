@@ -1,17 +1,22 @@
 pipeline {
     agent any
 
+    environment {
+        COMMITTER_EMAIL = ""
+        COMMITTER_USER = ""
+    }
+    
     stages {
         stage('Environments') {
             steps {
                 script {
-                    def COMMITTER_EMAIL = sh (
+                    COMMITTER_EMAIL = sh (
                           //script: 'git --no-pager show -s --format=\'%ae\'',
                           script: 'git show -s --pretty=\"%ae\"',
                           returnStdout: true
                     ).trim()
                     
-                    def COMMITTER_USER = sh (
+                    COMMITTER_USER = sh (
                           script: 'git show -s --pretty=\"%an\"',
                           returnStdout: true
                     ).trim()
