@@ -13,7 +13,7 @@ pipeline {
                     echo "COMMITTER_EMAIL: ${COMMITTER_EMAIL}"
 
                     def COMMITTER_USER = sh (
-                          script: 'git show --name-only',
+                          script: 'git --no-pager show -s',
                           returnStdout: true
                     ).trim()
                     
