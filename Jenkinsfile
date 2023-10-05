@@ -13,20 +13,11 @@ pipeline {
                     echo "COMMITTER_EMAIL: ${COMMITTER_EMAIL}"
 
                     def COMMITTER_USER = sh (
-                          script: 'git --no-pager show -s',
+                          script: 'git show -s --pretty=\"%an <%ae>\" ${GIT_COMMIT}',
                           returnStdout: true
                     ).trim()
                     
                     echo "COMMITTER_USER: ${COMMITTER_USER}"
-                    
-                    sh 'echo "${GIT_URL}"'
-                    sh 'echo "${GIT_BRANCH}"'
-                    sh 'echo "${GIT_COMMIT}"'
-                    sh 'echo "${GIT_PREVIOUS_COMMIT}"'
-                    sh 'echo "${GIT_AUTHOR_EMAIL}"'
-                    sh 'echo "${GIT_AUTHOR_NAME}"'
-                    sh 'echo "${GIT_COMMITTER_EMAIL}"'
-                    sh 'echo "${GIT_COMMITTER_NAME}"'
                 }
             }
         }
