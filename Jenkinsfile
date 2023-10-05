@@ -5,10 +5,11 @@ pipeline {
         stage('Environments') {
             steps {
                 script {
-                    def COMMITTER_EMAIL = bat(
+                    def COMMITTER_EMAIL = sh(
                         script: "git --no-pager show -s --format='%%ae'",
                         returnStdout: true).split('\r\n')[2].trim() 
-                        echo "COMMITTER_EMAIL: ${COMMITTER_EMAIL}"
+                    
+                    echo "COMMITTER_EMAIL: ${COMMITTER_EMAIL}"
                     
                     sh 'echo "${GIT_URL}"'
                     sh 'echo "${GIT_BRANCH}"'
